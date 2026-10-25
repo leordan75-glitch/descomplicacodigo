@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="DescomplicaCódigo — Aprender programação nunca foi tão simples. Entenda seu código, corrija erros e aprenda a lógica de forma didática." />
+  <title>DescomplicaCódigo — Aprender programação nunca foi tão simples</title>
+  <link rel="icon" href="src/assets/favicon.svg" type="image/svg+xml" />
+
+  <!-- Aplica o tema salvo ANTES da pintura (evita "piscar" claro → escuro) -->
+  <script>
+    (function () {
+      var t;
+      try { t = JSON.parse(localStorage.getItem("dc_theme")); } catch (e) {}
+      if (t !== "dark" && t !== "light") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+
+  <!-- Fontes (degradam para fontes do sistema se estiver offline) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/styles/main.css" />
+  <script type="module" src="src/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <section class="auth-gate" id="authGate" hidden aria-live="polite" aria-label="Autenticação">
+    <div class="auth-gate__card" id="authGateContent">
+      <span class="brand__logo" aria-hidden="true">&lt;/&gt;</span>
+      <h1>Conectando ao DescomplicaCódigo…</h1>
+      <p>Estamos verificando sua sessão.</p>
+      <p class="auth-gate__setup">Se esta tela não mudar, use o site publicado por HTTPS. Não abra o arquivo <code>index.html</code> diretamente pelo computador; módulos do site precisam de um servidor.</p>
+    </div>
+  </section>
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+    <div class="sidebar__brand">
+      <button class="icon-btn sidebar__collapse" id="collapseBtn" type="button" aria-label="Recolher menu" title="Recolher menu"><span data-ico="panel"></span></button>
+      <a href="#inicio" class="brand" data-nav="inicio">
+        <span class="brand__logo" aria-hidden="true">&lt;/&gt;</span>
+        <span class="brand__name">Descomplica<span class="brand__accent">Código</span></span>
+      </a>
+    </div>
+
+    <nav class="nav" aria-label="Seções">
+      <a class="nav__item" data-nav="inicio" href="#inicio"><span class="nav__ico" data-ico="home"></span><span class="nav__label">Início</span></a>
+      <a class="nav__item" data-nav="perguntar" href="#perguntar"><span class="nav__ico" data-ico="chat"></span><span class="nav__label">Perguntar</span></a>
+      <a class="nav__item" data-nav="biblioteca" href="#biblioteca"><span class="nav__ico" data-ico="book"></span><span class="nav__label">Biblioteca</span></a>
+      <a class="nav__item" data-nav="exercicios" href="#exercicios"><span class="nav__ico" data-ico="target"></span><span class="nav__label">Exercícios</span></a>
+      <div class="nav__divider" role="separator"></div>
+      <a class="nav__item" data-nav="dashboard" href="#dashboard"><span class="nav__ico" data-ico="chart"></span><span class="nav__label">Dashboard</span></a>
+      <a class="nav__item" data-nav="historico" href="#historico"><span class="nav__ico" data-ico="clock"></span><span class="nav__label">Histórico</span></a>
+      <a class="nav__item" data-nav="favoritos" href="#favoritos"><span class="nav__ico" data-ico="star"></span><span class="nav__label">Favoritos</span></a>
+    </nav>
+
+    <div class="sidebar__foot">
+      <div class="tip-card">
+        <span class="tip-card__spark" data-ico="sparkles"></span>
+        <p class="tip-card__text">Cole um código na aba <strong>Perguntar</strong> e peça “explique linha por linha”.</p>
+      </div>
+    </div>
+  </aside>
+
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- ============ ÁREA PRINCIPAL ============ -->
+  <div class="app">
+    <header class="topbar">
+      <button class="icon-btn topbar__menu" id="menuBtn" type="button" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false"><span data-ico="menu"></span></button>
+
+      <div class="search" role="search">
+        <span class="search__ico" data-ico="search"></span>
+        <label class="sr-only" for="globalSearch">Pesquisar</label>
+        <input type="search" id="globalSearch" class="search__input" placeholder="Pesquisar linguagens, erros, exercícios, explicações…" autocomplete="off"
+               role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list" />
+        <kbd class="search__kbd">/</kbd>
+        <div class="search__results" id="searchResults" role="listbox" hidden></div>
+      </div>
+
+      <div class="topbar__actions">
+        <button class="icon-btn" id="themeToggle" type="button"></button>
+        <button class="btn btn--ghost" id="loginBtn" type="button"></button>
+      </div>
+    </header>
+
+    <main class="main" id="main" tabindex="-1">
+
+      <!-- ===== INÍCIO ===== -->
+      <section class="view" data-view="inicio" aria-labelledby="t-inicio">
+        <div class="hero">
+          <div class="hero__glow"></div>
+          <div class="hero__inner">
+            <span class="badge"><span data-ico="sparkles"></span> Seu assistente de programação</span>
+            <h1 class="hero__title" id="t-inicio">Entenda, crie e evolua seu código com a IA.</h1>
+            <p class="hero__sub">O DescomplicaCódigo transforma dúvidas em aprendizado prático. Cole um trecho, peça uma explicação ou solicite um código novo, corrigido e melhorado.</p>
+            <div class="hero__cta">
+              <a class="btn btn--primary btn--lg" href="#perguntar" data-nav="perguntar"><span data-ico="sparkles"></span> Começar com a IA</a>
+              <a class="btn btn--soft btn--lg" href="#biblioteca" data-nav="biblioteca"><span data-ico="book"></span> Explorar conteúdos</a>
+            </div>
+            <div class="hero__proof">
+              <span><strong id="statTopics">–</strong> temas</span>
+              <span><strong id="statExercises">–</strong> exercícios</span>
+              <span><strong id="statLangs">–</strong> linguagens</span>
+            </div>
+          </div>
+
+          <div class="hero__showcase" aria-label="Exemplo de uso da IA">
+            <div class="showcase__card">
+              <div class="showcase__header">
+                <span class="showcase__dot showcase__dot--purple"></span>
+                <span class="showcase__label">DescomplicaCódigo IA</span>
+                <span class="showcase__status">Disponível</span>
+              </div>
+              <p class="showcase__prompt">“Crie uma função em JavaScript que calcula a média de notas.”</p>
+              <pre class="showcase__code"><code id="heroCode">function calcularMedia(notas) {
+  const total = notas.reduce((acc, nota) => acc + nota, 0);
+  return total / notas.length;
+}</code></pre>
+              <div class="showcase__actions">
+                <span><span data-ico="sparkles"></span> Explica</span>
+                <span><span data-ico="code"></span> Gera</span>
+                <span><span data-ico="wrench"></span> Corrige</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="section__title">Como funciona</h2>
+          <p class="section__desc">Uma conversa simples pode virar aprendizado concreto.</p>
+          <ol class="steps">
+            <li class="step"><span class="step__n">1</span><h3>Conte o que você precisa</h3><p>Descreva o problema, envie um código ou peça uma solução completa.</p></li>
+            <li class="step"><span class="step__n">2</span><h3>Receba ajuda em tempo real</h3><p>Veja explicação, código gerado, correção e sugestões de melhoria.</p></li>
+            <li class="step"><span class="step__n">3</span><h3>Pratique e avance</h3><p>Aplique o resultado nos exercícios, salve o conteúdo e acompanhe sua evolução.</p></li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <h2 class="section__title">O que a IA pode fazer por você</h2>
+          <div class="features" id="featuresGrid"></div>
+        </div>
+
+        <div class="mission">
+          <h2>Uma plataforma pensada para aprender fazendo</h2>
+          <p>Descubra como a programação funciona, peça novas soluções e pratique com exercícios guiados. O objetivo é transformar cada resposta em um passo para você criar, compreender e evoluir.</p>
+          <span class="mission__slogan">DescomplicaCódigo — Programar com clareza.</span>
+        </div>
+
+        <footer class="foot">
+          <div class="foot__brand"><span class="brand__logo" aria-hidden="true">&lt;/&gt;</span> Descomplica<span class="brand__accent">Código</span></div>
+          <p>© <span id="year"></span> DescomplicaCódigo. Todos os direitos reservados.</p>
+        </footer>
+      </section>
+
+      <!-- ===== PERGUNTAR (CHAT) ===== -->
+      <section class="view view--chat" data-view="perguntar" aria-label="Perguntar">
+        <div class="chat">
+          <div class="chat__scroll" id="chatScroll" aria-live="polite">
+            <div class="chat__welcome" id="chatWelcome">
+              <div class="chat__welcome-logo"><span data-ico="sparkles"></span></div>
+              <h2>Como posso te ajudar hoje?</h2>
+              <p>Cole um código, descreva um erro ou faça uma pergunta sobre programação.</p>
+              <div class="chips" id="promptChips"></div>
+            </div>
+          </div>
+
+          <form class="composer" id="composer">
+            <div class="composer__box">
+              <label class="sr-only" for="chatInput">Sua pergunta</label>
+              <textarea id="chatInput" class="composer__input" rows="1" placeholder="Escreva sua dúvida ou cole seu código aqui…"></textarea>
+              <div class="composer__row">
+                <label class="lang-select">
+                  <span data-ico="code"></span>
+                  <span class="sr-only">Linguagem do código</span>
+                  <select id="langSelect"><option value="auto">Detectar linguagem</option></select>
+                </label>
+                <button class="icon-btn composer__clear" id="newChatBtn" type="button" title="Nova conversa" aria-label="Nova conversa"><span data-ico="plus"></span></button>
+                <button class="btn btn--primary composer__send" id="sendBtn" type="submit" title="Enviar (Enter)"><span data-ico="send"></span><span class="hide-sm">Enviar</span></button>
+              </div>
+            </div>
+            <p class="composer__hint">Você pode pedir explicações, corrigir erros, melhorar ou gerar código. Use a linguagem selecionada para orientar uma resposta.</p>
+          </form>
+        </div>
+      </section>
+
+      <!-- ===== BIBLIOTECA ===== -->
+      <section class="view" data-view="biblioteca" aria-labelledby="t-bib">
+        <div class="page-head">
+          <h1 class="page-title" id="t-bib"><span data-ico="book"></span> Biblioteca de conteúdo</h1>
+          <p class="page-sub">Explicações organizadas, com exemplos práticos. Clique para abrir.</p>
+        </div>
+        <div class="filter-bar" id="libFilters" role="toolbar" aria-label="Filtrar por categoria"></div>
+        <div class="lib-grid" id="libGrid"></div>
+      </section>
+
+      <!-- ===== EXERCÍCIOS ===== -->
+      <section class="view" data-view="exercicios" aria-labelledby="t-ex">
+        <div class="page-head">
+          <h1 class="page-title" id="t-ex"><span data-ico="target"></span> Exercícios</h1>
+          <p class="page-sub">Desafios separados por dificuldade. Resolva e veja a solução comentada.</p>
+        </div>
+        <div class="tabs" id="exTabs" role="tablist" aria-label="Dificuldade">
+          <button class="tab" type="button" role="tab" data-level="facil">Fácil</button>
+          <button class="tab" type="button" role="tab" data-level="medio">Médio</button>
+          <button class="tab" type="button" role="tab" data-level="dificil">Difícil</button>
+        </div>
+        <div class="ex-list" id="exList"></div>
+      </section>
+
+      <!-- ===== DASHBOARD ===== -->
+      <section class="view" data-view="dashboard" aria-labelledby="t-dash">
+        <div class="page-head">
+          <h1 class="page-title" id="t-dash"><span data-ico="chart"></span> Dashboard</h1>
+          <p class="page-sub">Acompanhe sua evolução de aprendizado.</p>
+        </div>
+        <div class="stat-grid" id="statGrid"></div>
+        <div class="dash-row">
+          <div class="card">
+            <h2 class="card__title">Evolução semanal</h2>
+            <div class="bars" id="weekBars"></div>
+          </div>
+          <div class="card">
+            <h2 class="card__title">Linguagens estudadas</h2>
+            <div class="langbars" id="langBars"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== HISTÓRICO ===== -->
+      <section class="view" data-view="historico" aria-labelledby="t-hist">
+        <div class="page-head">
+          <h1 class="page-title" id="t-hist"><span data-ico="clock"></span> Histórico</h1>
+          <p class="page-sub">Todas as suas perguntas ficam salvas aqui. Clique para reabrir.</p>
+        </div>
+        <div class="list-panel" id="historyList"></div>
+      </section>
+
+      <!-- ===== FAVORITOS ===== -->
+      <section class="view" data-view="favoritos" aria-labelledby="t-fav">
+        <div class="page-head">
+          <h1 class="page-title" id="t-fav"><span data-ico="star"></span> Favoritos</h1>
+          <p class="page-sub">Explicações importantes que você salvou.</p>
+        </div>
+        <div class="list-panel" id="favList"></div>
+      </section>
+
+      <!-- ===== BUSCA ===== -->
+      <section class="view" data-view="busca" aria-labelledby="t-busca">
+        <div class="page-head">
+          <h1 class="page-title" id="t-busca"><span data-ico="search"></span> Resultados da pesquisa</h1>
+          <p class="page-sub" id="searchSummary"></p>
+        </div>
+        <div class="list-panel" id="searchPage"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============ MODAL GENÉRICO ============ -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__card" role="dialog" aria-modal="true" tabindex="-1">
+      <button class="icon-btn modal__x" type="button" data-close aria-label="Fechar"><span data-ico="x"></span></button>
+      <div class="modal__content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST ============ -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

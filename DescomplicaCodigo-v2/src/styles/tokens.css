@@ -1,0 +1,80 @@
+/* =========================================================
+   Design tokens — para reestilizar o app, mexa só aqui.
+   Paleta: azul + branco + detalhes em roxo.
+   ========================================================= */
+:root {
+  --primary: #2563eb;
+  --primary-strong: #1d4ed8;
+  --primary-soft: #dbeafe;
+  --accent: #7c3aed;
+  --accent-2: #a855f7;
+  --accent-soft: #ede9fe;
+
+  --bg: #f5f8fd;
+  --surface: #ffffff;
+  --surface-2: #f1f5fb;
+  --surface-3: #e8eef7;
+  --border: #e2e8f0;
+  --border-strong: #cdd7e5;
+  --text: #0f172a;
+  --text-2: #475569;
+  --text-3: #64748b;
+
+  --ok: #16a34a;
+  --warn: #d97706;
+  --danger: #dc2626;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06), 0 1px 3px rgba(15, 23, 42, .08);
+  --shadow-md: 0 4px 14px rgba(15, 23, 42, .08), 0 2px 6px rgba(15, 23, 42, .05);
+  --shadow-lg: 0 18px 50px rgba(15, 23, 42, .14);
+  --shadow-glow: 0 8px 30px rgba(37, 99, 235, .28);
+
+  --grad: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --sidebar-w: 264px;
+  --sidebar-w-collapsed: 76px;
+  --topbar-h: 64px;
+
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, Menlo, Consolas, monospace;
+
+  /* realce de sintaxe (sempre sobre fundo escuro) */
+  --code-bg: #0f172a;
+  --tok-key: #c792ea;
+  --tok-str: #7ee787;
+  --tok-num: #f0883e;
+  --tok-com: #7d8ca3;
+  --tok-fn: #79c0ff;
+  --tok-txt: #e6edf3;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --primary: #3b82f6;
+  --primary-strong: #60a5fa;
+  --primary-soft: #17233d;
+  --accent: #a855f7;
+  --accent-2: #c084fc;
+  --accent-soft: #241a3a;
+
+  --bg: #0a0f1c;
+  --surface: #111a2e;
+  --surface-2: #16203a;
+  --surface-3: #1c2842;
+  --border: #1e2b47;
+  --border-strong: #2a3a5c;
+  --text: #e7edf6;
+  --text-2: #a3b1c6;
+  --text-3: #7b8ba5;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, .4);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, .55);
+  --shadow-glow: 0 8px 34px rgba(59, 130, 246, .35);
+
+  --code-bg: #0b1120;
+
+  color-scheme: dark;
+}

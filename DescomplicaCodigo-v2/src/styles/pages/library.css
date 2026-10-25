@@ -1,0 +1,15 @@
+/* =========================================================
+   Tela: Biblioteca
+   ========================================================= */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.filter { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text-2); font-size: .85rem; font-weight: 500; transition: border-color .15s, color .15s, background .15s; }
+.filter:hover { border-color: var(--primary); color: var(--primary); }
+.filter[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+.lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(238px, 1fr)); gap: 16px; }
+.lib-card { display: block; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow-sm); transition: transform .18s ease, box-shadow .2s, border-color .2s; }
+.lib-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+.lib-card__ico { font-size: 1.8rem; margin-bottom: 12px; line-height: 1; }
+.lib-card__cat { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); }
+.lib-card h3 { font-size: 1.1rem; margin: 2px 0 6px; }
+.lib-card p { font-size: .86rem; color: var(--text-2); }

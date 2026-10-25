@@ -1,0 +1,110 @@
+mutation CreateUser($email: String!, $displayName: String) @auth(level: USER) {
+  user_insert(data: {
+    id_expr: "auth.uid",
+    email: $email,
+    displayName: $displayName,
+    createdAt_expr: "request.time"
+  })
+}
+
+mutation UpdateUser($displayName: String, $bio: String) @auth(level: USER) {
+  user_update(key: {id_expr: "auth.uid"}, data: {
+    displayName: $displayName,
+    bio: $bio
+  })
+}
+
+mutation DeleteUser @auth(level: USER) {
+  user_delete(key: {id_expr: "auth.uid"})
+}
+
+query GetCurrentUser @auth(level: USER) {
+  user(key: {id_expr: "auth.uid"}) {
+    email
+    displayName
+    bio
+  }
+}
+
+query ListUsers @auth(level: PUBLIC, insecureReason: "Listing public user profiles for directory") {
+  users {
+    displayName
+    avatarUrl
+  }
+}
+
+mutation CreateAuthMethod($type: String!, $id: String!) @auth(level: USER) {
+  authMethod_insert(data: {
+    providerType: $type,
+    providerId: $id,
+    user: {id_expr: "auth.uid"}
+  })
+}
+
+mutation DeleteAuthMethod($id: UUID!) @auth(level: USER) {
+  authMethod_delete(key: {id: $id})
+}
+
+query ListMyAuthMethods @auth(level: USER) {
+  authMethods(where: {userId: {eq_expr: "auth.uid"}}) {
+    providerType
+    providerId
+  }
+}
+
+mutation CreateSession($device: String!, $ip: String!) @auth(level: USER) {
+  session_insert(data: {
+    deviceName: $device,
+    ipAddress: $ip,
+    lastUsedAt_expr: "request.time",
+    user: {id_expr: "auth.uid"}
+  })
+}
+
+mutation UpdateSession($id: UUID!, $device: String!) @auth(level: USER) {
+  session_update(key: {id: $id}, data: {deviceName: $device})
+}
+
+mutation DeleteSession($id: UUID!) @auth(level: USER) {
+  session_delete(key: {id: $id})
+}
+
+query ListMySessions @auth(level: USER) {
+  sessions(where: {userId: {eq_expr: "auth.uid"}}) {
+    deviceName
+    lastUsedAt
+  }
+}
+
+mutation AddUserRole($role: String!) @auth(level: USER) {
+  userRole_insert(data: {
+    roleName: $role,
+    user: {id_expr: "auth.uid"}
+  })
+}
+
+mutation RemoveUserRole($id: UUID!) @auth(level: USER) {
+  userRole_delete(key: {id: $id})
+}
+
+query GetMyRoles @auth(level: USER) {
+  userRoles(where: {userId: {eq_expr: "auth.uid"}}) {
+    roleName
+  }
+}
+
+mutation LogSecurityEvent($event: String!, $ip: String) @auth(level: USER) {
+  securityLog_insert(data: {
+    eventType: $event,
+    ipAddress: $ip,
+    timestamp_expr: "request.time",
+    user: {id_expr: "auth.uid"}
+  })
+}
+
+query ListMySecurityLogs @auth(level: USER) {
+  securityLogs(where: {userId: {eq_expr: "auth.uid"}}, orderBy: [{timestamp: DESC}]) {
+    eventType
+    timestamp
+  }
+}

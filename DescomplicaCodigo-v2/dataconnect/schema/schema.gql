@@ -1,0 +1,33 @@
+type User @table {
+  email: String!
+  displayName: String
+  avatarUrl: String
+  bio: String
+  createdAt: Timestamp!
+  lastLoginAt: Timestamp
+}
+
+type AuthMethod @table {
+  providerType: String!
+  providerId: String!
+  user: User!
+}
+
+type Session @table {
+  deviceName: String!
+  ipAddress: String!
+  lastUsedAt: Timestamp!
+  user: User!
+}
+
+type UserRole @table {
+  roleName: String!
+  user: User!
+}
+
+type SecurityLog @table {
+  eventType: String!
+  timestamp: Timestamp!
+  ipAddress: String
+  user: User!
+}
